@@ -129,3 +129,53 @@ def gcdex(a, m, b = 1, d = 1):
     for i in range(d):
         arrX.append(int(x0 + i * newM))
     return arrX
+
+# перевод текста в массив чисел
+def textToArray(text):
+    textArray = []
+    for i in text:
+        textArray.append(ord(i))
+    return textArray
+
+def messageTransmission(p, text):
+    # генерация чисел для пользователей A и B
+    x1Arr = []
+    x2Arr = []
+    y1Arr = []
+    y2Arr = []
+    for i in range(len(text)):
+        x1Arr.append(randGcd1(p - 1))
+        x2Arr.append(gcdex(x1Arr[i], p - 1)[0])
+        y1Arr.append(randGcd1(p - 1))
+        y2Arr.append(gcdex(y1Arr[i], p - 1)[0])
+    print('A`s arrays of numbers : \n x1 : ', x1Arr, '\n x2 : ', x2Arr)
+    print('B`s arrays of numbers : \n y1 : ', y1Arr, '\n y2 : ', y2Arr)
+
+    print('\n')
+
+    # перевод текста в массив чисел
+    textArray = textToArray(text)
+    print('Original A`s message : ', textArray)
+
+    # первый шаг (пользователь А). После отправка пользователю B
+    for i in range(len(textArray)):
+        textArray[i] = step(textArray[i], x1Arr[i], p)
+    print('first step (A -> B)  : ', textArray)
+
+    # второй шаг (пользователь B). После отправка пользователю A
+    for i in range(len(textArray)):
+        textArray[i] = step(textArray[i], y1Arr[i], p)
+    print('second step (B -> A) : ', textArray)
+
+    # третий шаг (пользователь A). После отправка пользователю B
+    for i in range(len(textArray)):
+        textArray[i] = step(textArray[i], x2Arr[i], p)
+    print('third step (A -> B)  : ', textArray)
+
+    # пользователь B расшифровывает
+    for i in range(len(textArray)):
+        textArray[i] = step(textArray[i], y2Arr[i], p)
+    print('B decrypted message  : ', textArray)
+
+def step(text, num, p):
+    return power(text, num, p)
