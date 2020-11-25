@@ -84,7 +84,6 @@ def randGcd1(b):
         if math.gcd(num, b) == 1:
             return num
 
-
 # рекурентный алгоритм к КЦД
 def fct(arr):
     global b
@@ -137,6 +136,7 @@ def textToArray(text):
         textArray.append(ord(i))
     return textArray
 
+# передача сообщения с помощью протокола Шамира
 def messageTransmission(p, text):
     # генерация чисел для пользователей A и B
     x1Arr = []
@@ -150,7 +150,6 @@ def messageTransmission(p, text):
         y2Arr.append(gcdex(y1Arr[i], p - 1)[0])
     print('A`s arrays of numbers : \n x1 : ', x1Arr, '\n x2 : ', x2Arr)
     print('B`s arrays of numbers : \n y1 : ', y1Arr, '\n y2 : ', y2Arr)
-
     print('\n')
 
     # перевод текста в массив чисел
@@ -177,5 +176,6 @@ def messageTransmission(p, text):
         textArray[i] = step(textArray[i], y2Arr[i], p)
     print('B decrypted message  : ', textArray)
 
+# шаг в протоколое Шамира
 def step(text, num, p):
     return power(text, num, p)
